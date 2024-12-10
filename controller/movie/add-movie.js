@@ -1,10 +1,25 @@
 const asyncWrapper = require('../../middleware/async');
-const Event = require("../../models/Event");
+const Movie = require("../../models/Movie");
 const bucket = require('../../firebase/firebase');
 
-const addEvent = asyncWrapper(async (req, res, next) => {
-    const { title, description, category, price, date, time } = req.body;
+const addMovie = asyncWrapper(async (req, res, next) => {
+    let { title, description, category, date, timeSlots } = req.body;
+    console.log(req.body)
     const file = req.file;
+    const seatsArray = []
+
+    category=JSON.parse(category)
+    timeSlots=JSON.parse(timeSlots)
+    category?.map((item, index) => {
+        for (let i = item.start; i <= item.end; i++) {
+            seatsArray.push({
+                price: item.price,
+                category: item.name,
+                seatNumber: i
+            })
+        }
+    })
+    console.log(file)
 
     // Validate file
     if (!file) {
@@ -29,7 +44,7 @@ const addEvent = asyncWrapper(async (req, res, next) => {
     // Send an immediate response to the user before uploading completes
     res.status(202).json({
         success: true,
-        message: "File upload started. You will be notified once the event is created."
+        message: "Upload Success"
     });
 
     // Handle the file upload completion
@@ -41,23 +56,23 @@ const addEvent = asyncWrapper(async (req, res, next) => {
             // Get the public URL
             const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
 
-            // Create and save the event
-            const event = new Event({
+            // Create and save the movie
+            const movie = new Movie({
                 title,
                 description,
                 category,
                 image: publicUrl,
-                price,
                 date,
-                time
+                timeSlots,
+                seats: seatsArray
             });
 
-            await event.save();
+            await movie.save();
 
-            console.log("Event added successfully with image:", publicUrl);
+            console.log("Movie added successfully with image:", publicUrl);
             // Notify the user (e.g., via email or notification service)
         } catch (err) {
-            console.error("Error saving event:", err);
+            console.error("Error saving movie:", err);
         }
     });
 
@@ -65,4 +80,5 @@ const addEvent = asyncWrapper(async (req, res, next) => {
     blobStream.end(file.buffer);
 });
 
-module.exports = addEvent;
+module.exports = addMovie;
+

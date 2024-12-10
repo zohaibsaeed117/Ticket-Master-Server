@@ -10,6 +10,7 @@ const busRoutes = require("./routes/bus")
 const trainRoutes = require("./routes/train")
 const flightRoutes = require("./routes/flight")
 const eventRoutes = require("./routes/events")
+const movieRoutes = require("./routes/movie")
 require('dotenv').config();
 
 const app = express();
@@ -43,6 +44,7 @@ app.use('/api/bus',busRoutes);
 app.use('/api/train',trainRoutes);
 app.use('/api/flight',flightRoutes);
 app.use('/api/event',eventRoutes);
+app.use('/api/movie',movieRoutes);
 
 app.use(errorHandler);
 app.use(notFound);

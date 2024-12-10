@@ -9,7 +9,8 @@ const Event = new Schema({
     price: { type: Number },
     date: { type: String, required: true },
     time: { type: String, required: true },
-    image: { type: String }
+    image: { type: String },
+    bookings:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}]
 }, { timestamps: true });
 
 
