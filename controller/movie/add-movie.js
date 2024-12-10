@@ -3,13 +3,12 @@ const Movie = require("../../models/Movie");
 const bucket = require('../../firebase/firebase');
 
 const addMovie = asyncWrapper(async (req, res, next) => {
-    let { title, description, category, date, timeSlots } = req.body;
-    console.log(req.body)
+    let { title, description, category, date, timeSlots, rating } = req.body;
     const file = req.file;
     const seatsArray = []
 
-    category=JSON.parse(category)
-    timeSlots=JSON.parse(timeSlots)
+    category = JSON.parse(category)
+    timeSlots = JSON.parse(timeSlots)
     category?.map((item, index) => {
         for (let i = item.start; i <= item.end; i++) {
             seatsArray.push({
@@ -64,6 +63,7 @@ const addMovie = asyncWrapper(async (req, res, next) => {
                 image: publicUrl,
                 date,
                 timeSlots,
+                rating,
                 seats: seatsArray
             });
 

@@ -29,6 +29,7 @@ const getMovieById = asyncWrapper(async (req, res) => {
         timeSlots: movie.timeSlots,
         seats: movie.seats,
         date: movie.date,
+        rating: movie.rating,
         seatsLeft: movie.seats.reduce((acc, seat) => {
             return acc + (seat.bookedBy == null ? 1 : 0)
         }, 0),
