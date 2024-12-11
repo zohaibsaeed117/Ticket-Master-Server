@@ -14,12 +14,16 @@ const BookingSchema = new Schema({
     seats: { type: [SeatSchema], default: [] },
     totalPrice: { type: Number, required: true },
     status: { type: String, enum: ['pending', 'confirmed', 'cancelled'], default: 'pending' },
+    quantity: { type: Number},
     createdAt: { type: Date, default: Date.now }
 }, { timestamps: true });
 
 BookingSchema.pre('validate', function (next) {
     if (this.type === 'event') {
         this.seats = undefined;
+    }
+    if (this.type !== 'event') {
+        this.quantity = undefined;
     }
     next();
 });

@@ -13,9 +13,9 @@ const getMovies = asyncWrapper(async (req, res) => {
             booked: movie.seats.reduce((acc, seat) => {
                 return acc + (seat.bookedBy == null ? 0 : 1)
             }, 0),
-            price: movie.seats[0].price,
+            price: movie?.seats[0]?.price,
             rating: movie.rating,
-            image:movie.image
+            image: movie.image
         }
     })
     res.status(200).json({ success: true, data: finalData })

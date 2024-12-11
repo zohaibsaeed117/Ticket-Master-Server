@@ -15,22 +15,23 @@ const getMovieById = asyncWrapper(async (req, res) => {
     for (let i = 1; i < seats.length; i++) {
         let current = seats[i]
         if (prev.category != current.category) {
-            category.push({ start: start, end: prev.seatNumber, name: prev.category, price: prev.price })
+            category.push({ start: start, end: prev?.seatNumber, name: prev?.category, price: prev?.price })
             start = seats[i].seatNumber
         }
         prev = current
     }
-    category.push({ start: start, end: prev.seatNumber, name: prev.category, price: prev.price })
+    category.push({ start: start, end: prev?.seatNumber, name: prev?.category, price: prev?.price })
     const data = {
-        title: movie.title,
-        description: movie.description,
+        title: movie?.title,
+        description: movie?.description,
         category: category,
-        image: movie.image,
-        timeSlots: movie.timeSlots,
-        seats: movie.seats,
-        date: movie.date,
-        rating: movie.rating,
-        seatsLeft: movie.seats.reduce((acc, seat) => {
+        image: movie?.image,
+        timeSlots: movie?.timeSlots,
+        seats: movie?.seats,
+        seatsCount: movie?.seats.length,
+        date: movie?.date,
+        rating: movie?.rating,
+        seatsLeft: movie?.seats.reduce((acc, seat) => {
             return acc + (seat.bookedBy == null ? 1 : 0)
         }, 0),
     }

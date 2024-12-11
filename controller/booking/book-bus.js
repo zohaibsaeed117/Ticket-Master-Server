@@ -26,10 +26,8 @@ const bookBus = asyncWrapper(async (req, res) => {
         totalPrice: price,
         status: "confirmed",
     })
-    await booking.save()
     const user = await User.findOne({ _id: userId })
     user.bookings.push(booking._id)
-    await user.save()
     
     if (!bus) {
         return res.status(404).json({ success: false, message: 'Bus not found' });
@@ -55,6 +53,8 @@ const bookBus = asyncWrapper(async (req, res) => {
     }
 
 
+    await user.save()
+    await booking.save()
     await bus.save();
 
     res.status(200).json({ success: true, message: "Seats booked successfully" });

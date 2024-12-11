@@ -10,7 +10,7 @@ router.route('/get-movie/:id').get(getMovieById);
 router.route('/get-movies').get(getMovie);
 
 router.route('/add-movie').post(upload.single("file"), addMovie);
-router.route('/update-movie/:id').patch(updateMovie);
+router.route('/update-movie/:id').patch(upload.single('file'),updateMovie);
 
 module.exports = router;
 

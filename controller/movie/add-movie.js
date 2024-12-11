@@ -6,11 +6,11 @@ const addMovie = asyncWrapper(async (req, res, next) => {
     let { title, description, category, date, timeSlots, rating } = req.body;
     const file = req.file;
     const seatsArray = []
-
     category = JSON.parse(category)
     timeSlots = JSON.parse(timeSlots)
-    category?.map((item, index) => {
-        for (let i = item.start; i <= item.end; i++) {
+    category?.forEach((item, index) => {
+        console.log(typeof (item.start), typeof (item.end))
+        for (let i = Number(item.start); i <= Number(item.end); i++) {
             seatsArray.push({
                 price: item.price,
                 category: item.name,
@@ -18,7 +18,6 @@ const addMovie = asyncWrapper(async (req, res, next) => {
             })
         }
     })
-    console.log(file)
 
     // Validate file
     if (!file) {
