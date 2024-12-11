@@ -13,6 +13,7 @@ const users = new Schema({
   avatar: { type: String },
   password: { type: String },
   isAdmin: { type: Boolean,default:false },
+  bookings:[{type:mongoose.Schema.Types.ObjectId,ref:'Booking'}],
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", users);

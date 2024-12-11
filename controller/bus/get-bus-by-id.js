@@ -21,6 +21,8 @@ const getBusById = asyncWrapper(async (req, res) => {
         prev = current
     }
     category.push({ start: start, end: prev.seatNumber, name: prev.category, price: prev.price })
+
+    
     const data = {
         title: bus.title,
         description: bus.description,

@@ -11,6 +11,7 @@ const trainRoutes = require("./routes/train")
 const flightRoutes = require("./routes/flight")
 const eventRoutes = require("./routes/events")
 const movieRoutes = require("./routes/movie")
+const bookingRoutes = require('./routes/booking')
 require('dotenv').config();
 
 const app = express();
@@ -40,11 +41,12 @@ app.get('/api/verify', (req, res) => {
     return res.status(200).json({ success: true })
 })
 
-app.use('/api/bus',busRoutes);
-app.use('/api/train',trainRoutes);
-app.use('/api/flight',flightRoutes);
-app.use('/api/event',eventRoutes);
-app.use('/api/movie',movieRoutes);
+app.use('/api/bus', busRoutes);
+app.use('/api/train', trainRoutes);
+app.use('/api/flight', flightRoutes);
+app.use('/api/event', eventRoutes);
+app.use('/api/movie', movieRoutes);
+app.use('/api/booking', bookingRoutes);
 
 app.use(errorHandler);
 app.use(notFound);
