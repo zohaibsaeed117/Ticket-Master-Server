@@ -9,7 +9,7 @@ const login = asyncWrapper(async (req, res) => {
     console.log(user)
     if (user && (bcrypt.compare(rPassword, user.password))) {
         console.log('user')
-        var token = jwt.sign({ userId: user._id, username: user.username, password: user.password, firstName: user.firstName, lastName: user.lastName, avatar: user.avatar }, process.env.NEXT_PUBLIC_JWT_TOKEN);
+        var token = jwt.sign({ userId: user._id, username: user.username, password: user.password, firstName: user.firstName, lastName: user.lastName, isAdmin: user.isAdmin }, process.env.NEXT_PUBLIC_JWT_TOKEN);
 
         const newUser = {
             username: user.username,
@@ -17,7 +17,8 @@ const login = asyncWrapper(async (req, res) => {
             lastName: user.lastName,
             avatar: user.avatar,
             email: user.email,
-            age: user.age
+            age: user.age,
+            isAdmin: user.isAdmin
         }
 
         return res.status(200).json({ success: true, message: "You are logged in successfully", token: token, user: newUser })

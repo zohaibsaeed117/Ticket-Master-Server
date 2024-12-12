@@ -38,7 +38,7 @@ app.get('/api', (req, res) => {
 app.use(authVerify);
 
 app.get('/api/verify', (req, res) => {
-    return res.status(200).json({ success: true })
+    return res.status(200).json({ success: true, user: req.user });
 })
 
 app.use('/api/bus', busRoutes);

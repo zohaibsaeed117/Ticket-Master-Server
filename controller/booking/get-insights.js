@@ -2,6 +2,10 @@ const asyncWrapper = require('../../middleware/async');
 const Booking = require('../../models/Booking');
 
 const getInsights = asyncWrapper(async (req, res) => {
+
+    if (!req.user.isAdmin) {
+        return res.status(404).json({ success: false, message: "Route doesn't exists" })
+    }
     // Fetch total sales and income with aggregation
     const insights = await Booking.aggregate([
         {
